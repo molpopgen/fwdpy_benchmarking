@@ -1,0 +1,28 @@
+#Get a rough idea of scalability
+OUT1=tr10test.time.txt
+OUT1=tr100test.time.txt
+OUT1=tr1000test.time.txt
+OUT1=tr10000test.time.txt
+OUT1=tr50000test.time.txt
+
+SCRIPT=tennessen_slim2.txt
+
+all: $(OUT1) $(OUT2) $(OUT3) $(OUT4) $(OUT5)
+
+$(OUT1): $(SCRIPT) 
+	/usr/bin/time -f "%e %M" -o $(OUT1) ~/src/SLiM/bin/slim -d theta=10 -d rho=10 -d L=10000 $(SCRIPT)
+
+$(OUT2): $(SCRIPT) 
+	/usr/bin/time -f "%e %M" -o $(OUT1) ~/src/SLiM/bin/slim -d theta=100 -d rho=100 -d L=100000 $(SCRIPT)
+
+$(OUT3): $(SCRIPT) 
+	/usr/bin/time -f "%e %M" -o $(OUT1) ~/src/SLiM/bin/slim -d theta=1000 -d rho=1000 -d L=1000000 $(SCRIPT)
+
+$(OUT4): $(SCRIPT) 
+	/usr/bin/time -f "%e %M" -o $(OUT1) ~/src/SLiM/bin/slim -d theta=10000 -d rho=10000 -d L=10000000 $(SCRIPT)
+
+$(OUT5): $(SCRIPT) 
+	/usr/bin/time -f "%e %M" -o $(OUT1) ~/src/SLiM/bin/slim -d theta=50000 -d rho=50000 -d L=50000000 $(SCRIPT)
+
+clean:
+	rm -f $(OUT1)

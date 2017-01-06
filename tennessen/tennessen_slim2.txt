@@ -1,0 +1,40 @@
+//Tennessen et al model, EA demog only
+// set up a simple neutral simulation
+initialize() {
+Ninit=7310;
+// set the overall mutation rate
+mu=theta/(4.0*Ninit*L);
+r=rho/(4.0*Ninit*L);
+print(mu);
+initializeMutationRate(mu); // m1 mutation type: neutral
+initializeMutationType("m1", 0.5, "f", 0.0);
+// g1 genomic element type: uses m1 for all mutations
+initializeGenomicElementType("g1", m1, 1.0);
+initializeGenomicElement(g1, 1, L);
+// uniform recombination along the chromosome
+initializeRecombinationRate(r); }
+// create a population of 7310 individuals
+1
+{
+sim.addSubpop("p1", 7310);
+}
+//10N generations of "burn in" then first
+//instantaneous growth bit
+73100 {p1.setSubpopulationSize(14474);}
+//Evolve at N=14,474 until first bottlneck
+76980 {p1.setSubpopulationSize(1861);}
+//second bottleneck
+78099: { p1.setSubpopulationSize(1032);
+}
+//Then, the two phases of exponential growth
+78100:78815 { 
+//newSize = asInteger(round(1032*exp((sim.generation-78100+1)*log(1.00308))));
+G=exp((log(9300)-log(1032))/(78815-78100));
+newSize = asInteger(round(1032*(G^(sim.generation-78099))));
+p1.setSubpopulationSize(newSize);
+}
+78816:79020 {
+G=exp((log(512000)-log(9300))/(205));
+newSize = asInteger(round(9300*exp((sim.generation-78815+1)*log(G))));
+p1.setSubpopulationSize(newSize);
+}

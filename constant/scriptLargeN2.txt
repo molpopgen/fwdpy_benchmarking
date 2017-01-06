@@ -1,0 +1,19 @@
+//N=1e4, theta=rho=1e3
+// set up a simple neutral simulation
+initialize() {
+// set the overall mutation rate
+initializeMutationRate(2.5e-9); // m1 mutation type: neutral
+initializeMutationType("m1", 0.5, "f", 0.0);
+// g1 genomic element type: uses m1 for all mutations
+initializeGenomicElementType("g1", m1, 1.0);
+initializeGenomicElement(g1, 0, 9999999);
+// uniform recombination along the chromosome
+initializeRecombinationRate(2.5e-9); }
+// create a population of 1e4 individuals
+1
+{
+sim.addSubpop("p1", 10000);
+}
+// run to generation 1e5
+100000 late() { p1.outputSample(10); }
+
