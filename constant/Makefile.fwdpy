@@ -1,0 +1,16 @@
+#Dummy files signalling that work is done
+OUT1=theta1000.txt
+OUT2=theta10000.txt
+
+all: $(OUT1) $(OUT2)
+
+$(OUT1): run_fwdpy.py evolve.py
+	parallel ./run_fwdpy.sh 1000 1000 :::: seeds
+	touch $(OUT1)
+
+$(OUT2): run_fwdpy.py evolve.py
+	parallel ./run_fwdpy.sh 10000 10000 :::: seeds
+	touch $(OUT2)
+
+clean:
+	rm -f $(OUT1) $(OUT2)
