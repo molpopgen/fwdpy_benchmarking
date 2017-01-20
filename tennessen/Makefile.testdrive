@@ -3,7 +3,7 @@ OUT1=tr10test.time.txt
 OUT2=tr100test.time.txt
 OUT3=tr1000test.time.txt
 OUT4=tr10000test.time.txt
-OUT5=tr50000test.time.txt
+OUT5=tr20000test.time.txt
 
 SCRIPT=tennessen_slim2.txt
 
@@ -22,7 +22,7 @@ $(OUT4): $(SCRIPT)
 	/usr/bin/time -f "%e %M" -o $(OUT4) ~/src/SLiM/bin/slim -d theta=10000 -d rho=10000 -d L=10000000 $(SCRIPT)
 
 $(OUT5): $(SCRIPT) 
-	/usr/bin/time -f "%e %M" -o $(OUT5) ~/src/SLiM/bin/slim -d theta=50000 -d rho=50000 -d L=50000000 $(SCRIPT)
+	/usr/bin/time -f "%e %M" -o $(OUT5) ~/src/SLiM/bin/slim -d theta=20000 -d rho=20000 -d L=20000000 $(SCRIPT)
 
 clean:
 	rm -f $(OUT1) $(OUT2) $(OUT3) $(OUT4) $(OUT5)
