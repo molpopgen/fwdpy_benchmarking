@@ -24,17 +24,19 @@ for i in case:
         g = glob.glob(b)
         for gi in g:
             data = pd.read_csv(gi,sep=' ',header=None)
+            if sim == 'fwdpy':
+                sim = 'fwdpy11'
             simnames.append(sim)
             cases.append(i)
             times.append(data[0][0])
             mem.append(data[1][0])
 
-data = pd.DataFrame({'sim':simnames,'case':cases,'times':times,'mem':mem})
+data = pd.DataFrame({'Simulation':simnames,'case':cases,'times':times,'mem':mem})
 
 data['times'] /= (60.*60.)
 
-means = data.groupby(['case','sim']).mean().reset_index()
+#means = data.groupby(['case','sim']).mean().reset_index()
 
-final = means.set_index('case').join(params.set_index('case'))
+final = data.set_index('case').join(params.set_index('case'))
 
-final.to_csv('means.txt',sep='\t',header=True,index=False)
+final.to_csv('data.txt',sep='\t',header=True,index=False)
