@@ -10,7 +10,7 @@ plot_labeller <- function(variable,value){
   } 
 }
 p = ggplot(x,aes(x=factor(pneut),times)) +  #+ geom_boxplot(aes(color=sim,position="dodge")) + 
-    facet_grid(h~s,scales="free_y",labeller=plot_labeller) + 
+    facet_grid(s~h,scales="free_y",labeller=plot_labeller) + 
     geom_point(position = position_jitter(width = 0.2),aes(color=Simulation),size=2) + 
     xlab("Proportion of new mutations that are neutral.") + ylab("Run time (hours)") +
     scale_fill_viridis(discrete=TRUE) + theme_bw()
