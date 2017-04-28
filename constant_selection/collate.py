@@ -6,11 +6,11 @@ import pandas as pd
 #of selected mutations, s, and h
 #2. N=1e4 for all cases
 #3. The TOTAL 4Nu and 4Nr are 1e3 for all cases 
-pselected = pd.Series([0.99]*2 + [0.9]*2 + [0.99]*2 + [0.9]*2)
+pneutral = pd.Series([0.99]*2 + [0.9]*2 + [0.99]*2 + [0.9]*2)
 h = pd.Series([0.0,0.5,0.0,0.5,0.0,0.5,0.0,0.5])
 s = pd.Series([-1e-3]*4 + [0.05]*4) 
 case = pd.Series(list(range(1,9)))
-params = pd.DataFrame({'psel':pselected,'h':h,'s':s,'case':case})
+params = pd.DataFrame({'pneut':pneutral,'h':h,'s':s,'case':case})
 
 sims = ['fwdpy','slim']
 
