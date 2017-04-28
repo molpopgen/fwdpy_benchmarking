@@ -1,8 +1,10 @@
-import fwdpy as fp
-import fwdpy.fitness as fpw
+import fwdpy11 as fp11
+import fwdpy11.fitness as fp11w
+import fwdpy11.temporal_samplers as tp
+import fwdpy11.wright_fisher as wf
 import numpy as np
 
-def evolve(N,npops,theta,rho,pneutral,s,h,seed):
+def evolve(args):
     """
     This function evolves a population
     with only neutral mutations.
@@ -11,12 +13,13 @@ def evolve(N,npops,theta,rho,pneutral,s,h,seed):
     mutation and recombination occuring
     on the continuous interval from [0,1).
     """
+    N,theta,rho,pneutral,s,h,seed = args
     #A region is defined by a start, stop,
     #and a weight
-    nregions=[fp.Region(0,1,1)]        #Where neutral mutations occur
+    nregions=[fp11.Region(0,1,1)]        #Where neutral mutations occur
     rregions=nregions                  #Where recombination occurs
-    sregions=[fp.ConstantS(0,1,1,s,h)] #Where selected mutations occur 
-    rng=fp.GSLrng(seed)                #Random number seed object
+    sregions=[fp11.ConstantS(0,1,1,s,h)] #Where selected mutations occur 
+    rng=fp11.GSLrng(seed)                #Random number seed object
 
     mu_n = pneutral*theta/(4.*float(N))
     mu_s = (1.-pneutral)*theta/(4.*float(N))
@@ -29,11 +32,12 @@ def evolve(N,npops,theta,rho,pneutral,s,h,seed):
     #implement bottlenecks, etc.,
     #by changing what is in nlist
     nlist = np.array([N]*10*N,dtype=np.uint32) 
-    fitness=fpw.SpopAdditive(1) #Scaling of 1 makes model identical to SLiM
-    sampler=fp.NothingSampler(1)
-    pops=fp.SpopVec(1,N)
-    pop=fp.evolve_regions_sampler_fitness(rng,pops,sampler,fitness,nlist,
+    fitness=fp11w.SpopAdditive(1) #Scaling of 1 makes model identical to SLiM
+    sampler=tp.RecordNothing()
+    pop=fp11.Spop(N)
+    wf.evolve_regions_sampler_fitness(rng,pop,nlist,
             mu_n,mu_s,recrate,
             nregions,
             sregions,
-            rregions,0)
+            rregions,
+            fitness,sampler,0)

@@ -8,4 +8,4 @@ if __name__ == "__main__":
     pneutral=float(sys.argv[4])
     s=float(sys.argv[5])
     h=float(sys.argv[6])
-    evolve.evolve(10000,1,theta,rho,pneutral,s,h,seed)
+    evolve.evolve((10000,theta,rho,pneutral,s,h,seed))

@@ -1,7 +1,8 @@
-import fwdpy as fp
+import fwdpy11 as fp11
+import fwdpy11.wright_fisher as wf
 import numpy as np
 
-def evolve(N,npops,theta,rho,seed):
+def evolve(args):
     """
     This function evolves a population
     with only neutral mutations.
@@ -10,12 +11,13 @@ def evolve(N,npops,theta,rho,seed):
     mutation and recombination occuring
     on the continuous interval from [0,1).
     """
+    N,theta,rho,seed=args
     #A region is defined by a start, stop,
     #and a weight
-    nregions=[fp.Region(0,1,1)] #Where neutral mutations occur
+    nregions=[fp11.Region(0,1,1)] #Where neutral mutations occur
     rregions=nregions           #Where recombination occurs
     sregions=[]                 #No selected mutations = empty lst
-    rng=fp.GSLrng(seed)         #Random number seed object
+    rng=fp11.GSLrng(seed)         #Random number seed object
 
     mu_n = theta/(4.*float(N))
     mu_s = 0.
@@ -28,7 +30,8 @@ def evolve(N,npops,theta,rho,seed):
     #implement bottlenecks, etc.,
     #by changing what is in nlist
     nlist = np.array([N]*10*N,dtype=np.uint32) 
-    pop=fp.evolve_regions(rng,npops,N,nlist,
+    pop=fp11.Spop(N)
+    wf.evolve_regions(rng,pop,nlist,
             mu_n,mu_s,recrate,
             nregions,
             sregions,

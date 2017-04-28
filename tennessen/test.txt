@@ -1,0 +1,27 @@
+//Tennessen et al model, EA demog only
+// set up a simple neutral simulation
+initialize() {
+// set the overall mutation rate
+initializeMutationRate(2.5e-8); // m1 mutation type: neutral
+initializeMutationType("m1", 0.5, "f", 0.0);
+// g1 genomic element type: uses m1 for all mutations
+initializeGenomicElementType("g1", m1, 1.0);
+initializeGenomicElement(g1, 0, 99);
+// uniform recombination along the chromosome
+initializeRecombinationRate(2.5e-8); }
+// create a population of 7310 individuals
+1
+{
+sim.addSubpop("p1", 1032);
+print(sim.generation);
+}
+//10N generations of "burn in" then first
+//Then, the two phases of exponential growth
+1:715{ 
+G=exp((log(9300)-log(1032))/(715));
+//newSize = asInteger(round(1032.0*(1.00308^(sim.generation))));
+newSize = asInteger(round(1032.0*exp(log(G)*(sim.generation+1))));
+p1.setSubpopulationSize(newSize);
+print(p1.individualCount);
+}
+

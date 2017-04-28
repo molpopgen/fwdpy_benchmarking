@@ -1,0 +1,31 @@
+#Dummy files signalling that work is done
+OUT1=tennsessen10.txt
+OUT2=tennsessen100.txt
+OUT3=tennessen1000.txt
+OUT4=tennessen10000.txt
+OUT5=tennessen20000.txt
+
+all: $(OUT1) $(OUT2) $(OUT3) $(OUT4) $(OUT5)
+
+$(OUT1): run_fwdpy.py evolve.py seeds
+	parallel ./run_fwdpy.sh 10 10 :::: seeds
+	touch $(OUT1)
+
+$(OUT2): run_fwdpy.py evolve.py seeds
+	parallel ./run_fwdpy.sh 100 100 :::: seeds
+	touch $(OUT2)
+
+$(OUT3): run_fwdpy.py evolve.py seeds
+	parallel ./run_fwdpy.sh 1000 1000 :::: seeds
+	touch $(OUT3)
+
+$(OUT4): run_fwdpy.py evolve.py seeds
+	parallel ./run_fwdpy.sh 10000 10000 :::: seeds
+	touch $(OUT4)
+
+$(OUT5): run_fwdpy.py evolve.py seeds
+	parallel ./run_fwdpy.sh 20000 20000 :::: seeds
+	touch $(OUT5)
+
+clean:
+	rm -f $(OUT1) $(OUT2) $(OUT3) $(OUT4) $(OUT5)
